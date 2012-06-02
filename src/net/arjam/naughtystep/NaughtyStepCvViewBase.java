@@ -64,7 +64,11 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
         float volume = streamVolumeCurrent / streamVolumeMax;
         
         /* Play the sound with the correct volume */
-        mSoundPool.play(mSoundPoolMap.get(sound), volume, volume, 1, loop?1:0, 1f);
+        if (stop) {
+            mSoundPool.stop(mSoundPoolMap.get(sound));
+        } else {
+            mSoundPool.play(mSoundPoolMap.get(sound), volume, volume, 1, loop?1:0, 1f);
+        }
     }
 
     

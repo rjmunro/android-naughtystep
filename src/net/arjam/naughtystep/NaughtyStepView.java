@@ -21,6 +21,7 @@ class NaughtyStepView extends NaughtyStepCvViewBase {
 
     public NaughtyStepView(Context context) {
         super(context);
+        this.setKeepScreenOn(true);
     }
 
     @Override

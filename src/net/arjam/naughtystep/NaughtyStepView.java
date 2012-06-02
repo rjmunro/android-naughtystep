@@ -44,6 +44,7 @@ class NaughtyStepView extends NaughtyStepCvViewBase {
             break;
         case NaughtyStepActivity.VIEW_MODE_RGBA:
             capture.retrieve(mRgba, Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGBA);
+            //TODO: Remove below adding of text
             Core.putText(mRgba, "OpenCV + Android", new Point(10, 100), 3, 2, new Scalar(255, 0, 0, 255), 3);
             break;
         case NaughtyStepActivity.VIEW_MODE_CANNY:

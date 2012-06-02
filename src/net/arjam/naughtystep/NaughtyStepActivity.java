@@ -4,6 +4,7 @@ import net.arjam.naughtystep.NaughtyStepView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,8 +21,6 @@ public class NaughtyStepActivity extends Activity {
     private MenuItem            mItemPreviewRGBA;
     private MenuItem            mItemPreviewGray;
     private MenuItem            mItemPreviewCanny;
-
-    public static int           viewMode        = VIEW_MODE_RGBA;
 
     private NaughtyStepView 		mView;
 
@@ -61,6 +60,7 @@ public class NaughtyStepActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         mView = new NaughtyStepView(this);
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         setContentView(mView);
     }
 
@@ -76,12 +76,15 @@ public class NaughtyStepActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i(TAG, "Menu Item selected " + item);
+        /*
         if (item == mItemPreviewRGBA)
             viewMode = VIEW_MODE_RGBA;
         else if (item == mItemPreviewGray)
             viewMode = VIEW_MODE_GRAY;
         else if (item == mItemPreviewCanny)
             viewMode = VIEW_MODE_CANNY;
+        return true;
+        */
         return true;
     }
 }

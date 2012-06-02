@@ -16,8 +16,7 @@ import android.view.SurfaceHolder;
 
 class NaughtyStepView extends NaughtyStepCvViewBase {
     private Mat mRgba;
-    private Mat mGray;
-    private Mat mIntermediateMat;
+    private Mat mOrigMat;
 
     public NaughtyStepView(Context context) {
         super(context);
@@ -28,9 +27,8 @@ class NaughtyStepView extends NaughtyStepCvViewBase {
     public void surfaceCreated(SurfaceHolder holder) {
         synchronized (this) {
             // initialize Mats before usage
-            mGray = new Mat();
             mRgba = new Mat();
-            mIntermediateMat = new Mat();
+            mOrigMat = new Mat();
         }
 
         super.surfaceCreated(holder);
@@ -38,23 +36,14 @@ class NaughtyStepView extends NaughtyStepCvViewBase {
 
     @Override
     protected Bitmap processFrame(VideoCapture capture) {
-        switch (NaughtyStepActivity.viewMode) {
-        case NaughtyStepActivity.VIEW_MODE_GRAY:
-            capture.retrieve(mGray, Highgui.CV_CAP_ANDROID_GREY_FRAME);
-            Imgproc.cvtColor(mGray, mRgba, Imgproc.COLOR_GRAY2RGBA, 4);
-            break;
-        case NaughtyStepActivity.VIEW_MODE_RGBA:
-            capture.retrieve(mRgba, Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGBA);
-            //TODO: Remove below adding of text
-            Core.putText(mRgba, "OpenCV + Android", new Point(10, 100), 3, 2, new Scalar(255, 0, 0, 255), 3);
-            break;
-        case NaughtyStepActivity.VIEW_MODE_CANNY:
-            capture.retrieve(mGray, Highgui.CV_CAP_ANDROID_GREY_FRAME);
-            Imgproc.Canny(mGray, mIntermediateMat, 80, 100);
-            Imgproc.cvtColor(mIntermediateMat, mRgba, Imgproc.COLOR_GRAY2BGRA, 4);
-			break;
+        capture.retrieve(mRgba, Highgui.CV_CAP_ANDROID_COLOR_FRAME_RGBA);
+        /*
+        if (mOrigMat == null) {
+        	mOrigMat = mRgba.clone();
+        } else {
+            Point result = Imgproc.phaseCorrelate(mRgba, mOrigMat);
         }
-
+        */
         Bitmap bmp = Bitmap.createBitmap(mRgba.cols(), mRgba.rows(), Bitmap.Config.ARGB_8888);
 
         try {
@@ -75,14 +64,11 @@ class NaughtyStepView extends NaughtyStepCvViewBase {
             // Explicitly deallocate Mats
             if (mRgba != null)
                 mRgba.release();
-            if (mGray != null)
-                mGray.release();
-            if (mIntermediateMat != null)
-                mIntermediateMat.release();
+            if (mOrigMat != null)
+                mOrigMat.release();
 
             mRgba = null;
-            mGray = null;
-            mIntermediateMat = null;
+            mOrigMat = null;
         }
     }
 }

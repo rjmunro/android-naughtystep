@@ -116,9 +116,10 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
             }
 
             if (bmp != null) {
-            	if (firstBmp == null) {
-            		firstBmp = bmp;
-            	}
+                if (firstBmp == null || count > 10) {
+                    firstBmp = bmp;
+                    count = 0;
+                }
                 Canvas canvas = mHolder.lockCanvas();
                 for (int x = 0; x < bmp.getWidth(); x++) {
                     for (int y = 0; y < bmp.getHeight(); y++) {

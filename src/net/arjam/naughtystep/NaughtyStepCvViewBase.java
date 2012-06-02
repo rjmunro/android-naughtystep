@@ -30,15 +30,15 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
     public boolean openCamera() {
         Log.i(TAG, "openCamera");
         synchronized (this) {
-	        releaseCamera();
-	        mCamera = new VideoCapture(Highgui.CV_CAP_ANDROID);
-	        if (!mCamera.isOpened()) {
-	            mCamera.release();
-	            mCamera = null;
-	            Log.e(TAG, "Failed to open native camera");
-	            return false;
-	        }
-	    }
+            releaseCamera();
+            mCamera = new VideoCapture(Highgui.CV_CAP_ANDROID + 1);
+            if (!mCamera.isOpened()) {
+                mCamera.release();
+                mCamera = null;
+                Log.e(TAG, "Failed to open native camera");
+                return false;
+            }
+        }
         return true;
     }
 

@@ -121,8 +121,11 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
                     count = 0;
                 }
                 Canvas canvas = mHolder.lockCanvas();
-                for (int x = 0; x < bmp.getWidth(); x++) {
-                    for (int y = 0; y < bmp.getHeight(); y++) {
+
+                int width = bmp.getWidth();
+                int height = bmp.getHeight();
+                for (int y = 0; y < height; y++) {
+                	for (int x = 0; x < width; x++) {
                         int pixel = bmp.getPixel(x, y);
                         int lastPixel = firstBmp.getPixel(x, y);
                         int pixDiff = (android.graphics.Color.red(pixel) - android.graphics.Color

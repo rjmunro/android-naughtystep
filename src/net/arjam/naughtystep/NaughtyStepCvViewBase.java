@@ -16,6 +16,7 @@ import android.view.SurfaceView;
 public abstract class NaughtyStepCvViewBase extends SurfaceView implements
         SurfaceHolder.Callback, Runnable {
     private static final String TAG = "NaughtyStep::SurfaceView";
+    private static final int BORDERSIZE = 50;
 
     private SurfaceHolder mHolder;
     private VideoCapture mCamera;
@@ -101,7 +102,9 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
         Log.i(TAG, "Starting processing thread");
         Bitmap bmp = null;
         Bitmap firstBmp = null;
+        int count = 0;
         while (true) {
+        	count+=1;
 
             synchronized (this) {
                 if (mCamera == null)
@@ -124,8 +127,12 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
 
                 int width = bmp.getWidth();
                 int height = bmp.getHeight();
+                int pixErrorCount = 0;
                 for (int y = 0; y < height; y++) {
                 	for (int x = 0; x < width; x++) {
+                        if ((y < BORDERSIZE) && (x == BORDERSIZE)) {
+                            x = bmp.getWidth()-BORDERSIZE;
+                        }
                         int pixel = bmp.getPixel(x, y);
                         int lastPixel = firstBmp.getPixel(x, y);
                         int pixDiff = (android.graphics.Color.red(pixel) - android.graphics.Color
@@ -136,6 +143,7 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements
                                 .blue(lastPixel)) ^ 2;
                         if (pixDiff > 48) {
                             bmp.setPixel(x, y, android.graphics.Color.RED);
+                            pixErrorCount += 1;
                         }
                     }
                 }

@@ -61,7 +61,7 @@ class NaughtyStepView extends NaughtyStepCvViewBase {
         	Utils.matToBitmap(mRgba, bmp);
             return bmp;
         } catch(Exception e) {
-        	Log.e("org.opencv.samples.tutorial2", "Utils.matToBitmap() throws an exception: " + e.getMessage());
+        	Log.e("net.arjam.naughtystep", "Utils.matToBitmap() throws an exception: " + e.getMessage());
             bmp.recycle();
             return null;
         }

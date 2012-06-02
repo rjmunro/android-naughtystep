@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 public class NaughtyStepActivity extends Activity {
-    private static final String TAG             = "Sample::Activity";
+    private static final String TAG             = "NaughtyStep::Activity";
 
     public static final int     VIEW_MODE_RGBA  = 0;
     public static final int     VIEW_MODE_GRAY  = 1;

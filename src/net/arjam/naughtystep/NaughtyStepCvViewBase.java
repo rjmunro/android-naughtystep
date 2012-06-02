@@ -13,11 +13,12 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public abstract class NaughtyStepCvViewBase extends SurfaceView implements SurfaceHolder.Callback, Runnable {
+public abstract class NaughtyStepCvViewBase extends SurfaceView implements
+        SurfaceHolder.Callback, Runnable {
     private static final String TAG = "NaughtyStep::SurfaceView";
 
-    private SurfaceHolder       mHolder;
-    private VideoCapture        mCamera;
+    private SurfaceHolder mHolder;
+    private VideoCapture mCamera;
 
     public NaughtyStepCvViewBase(Context context) {
         super(context);
@@ -78,7 +79,8 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements Surfa
 
     }
 
-    public void surfaceChanged(SurfaceHolder _holder, int format, int width, int height) {
+    public void surfaceChanged(SurfaceHolder _holder, int format, int width,
+            int height) {
         Log.i(TAG, "surfaceChanged");
         setupCamera(width, height);
     }
@@ -122,19 +124,24 @@ public abstract class NaughtyStepCvViewBase extends SurfaceView implements Surfa
                     for (int y = 0; y < bmp.getHeight(); y++) {
                         int pixel = bmp.getPixel(x, y);
                         int lastPixel = firstBmp.getPixel(x, y);
-                        int pixDiff = (android.graphics.Color.red(pixel) - android.graphics.Color.red(lastPixel))^2;
-                        pixDiff += (android.graphics.Color.green(pixel) - android.graphics.Color.green(lastPixel))^2;
-                        pixDiff += (android.graphics.Color.blue(pixel) - android.graphics.Color.blue(lastPixel))^2;
-                        if (pixDiff>48) {
-                        	bmp.setPixel(x, y, android.graphics.Color.RED);
+                        int pixDiff = (android.graphics.Color.red(pixel) - android.graphics.Color
+                                .red(lastPixel)) ^ 2;
+                        pixDiff += (android.graphics.Color.green(pixel) - android.graphics.Color
+                                .green(lastPixel)) ^ 2;
+                        pixDiff += (android.graphics.Color.blue(pixel) - android.graphics.Color
+                                .blue(lastPixel)) ^ 2;
+                        if (pixDiff > 48) {
+                            bmp.setPixel(x, y, android.graphics.Color.RED);
                         }
                     }
                 }
                 if (canvas != null) {
-                    canvas.drawBitmap(bmp, (canvas.getWidth() - bmp.getWidth()) / 2, (canvas.getHeight() - bmp.getHeight()) / 2, null);
+                    canvas.drawBitmap(bmp,
+                            (canvas.getWidth() - bmp.getWidth()) / 2,
+                            (canvas.getHeight() - bmp.getHeight()) / 2, null);
                     mHolder.unlockCanvasAndPost(canvas);
                 }
-                //bmp.recycle();
+                // bmp.recycle();
             }
         }
 
